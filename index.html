@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Profiling System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ff6b6b;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.19), 0px 6px 6px rgba(0,0,0,0.23);
+            border-radius: 5px;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+        }
+        h3 {
+          padding-top: 6px;
+          color: #333333;
+          font-size: 14px;
+          font-style: italic;
+        }
+        .file-upload {
+            position: relative;
+            display: inline-block;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            padding: 10px 20px;
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+        }
+        .loader {
+          border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-lg mt-4 p-5 bg-dark text-white text-center">
+        <h1 class="title">JOB PROFILING SYSTEM</h1>
+      </div>
+    <div class="container mt-4">
+        <h1>Upload Your Resume</h1>
+        <form method="post" enctype="multipart/form-data">
+          <div class="file-upload">
+            <label for="resume">Choose File</label>
+            <input type="file" id="resume" name="resume" accept=".pdf" onchange="displayFileName(this)">
+        </div>
+        {% if filename %}
+          <h3>Uploaded file: {{ filename }}</h3>
+        {% endif %}
+        <button type="submit">Upload</button>
+        </form>
+        {% if category %}
+            <h2>Predicted Category: {{ category }}</h2>
+        {% endif %}
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </div>
+    <div id="loader" class="loader"></div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>How It Works?</h2>
+                <p>User uploads a resume: The user uploads a resume file in PDF format.</p>
+                <p>Resume screening: The system extracts the text content from the uploaded resume using PDF text extraction techniques.</p>
+                <p>NLP-based prediction: The system uses machine learning models and NLP techniques to analyze the text content and predict the job category.</p>
+                <p>Display prediction: The predicted job category is displayed to the user on the same page.</p>
+            </div>
+            <div class="col-sm-4">
+                <h2>Technology Used</h2>
+                <p>Flask: Python web framework for building the backend server.</p>
+                <p>JavaScript: Used for handling asynchronous form submission and updating page content dynamically.</p>
+                <p>HTML/CSS: Frontend markup and styling.</p>
+                <p>Natural Language Processing (NLP): Techniques for analyzing text data.</p>
+                <p>Machine Learning: Trained models for predicting job categories.</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><span class="rounded">About</span></h2>
+                <p>The Job Profiling System is a web application built using Natural Language Processing (NLP) techniques to analyze resumes and predict the job category based on the content of the resume.</span></p>
+                <p>This system aims to assist recruiters and HR professionals in efficiently categorizing resumes and identifying suitable candidates for job roles.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+      function displayFileName(input) {
+          if (input.files && input.files[0]) {
+              document.getElementById('fileName').textContent = "Selected file: " + input.files[0].name;
+          }
+      }
+      function showLoading() {
+            document.getElementById('loader').style.display = 'block';
+        }
+  </script>
+</body>
+</html>
